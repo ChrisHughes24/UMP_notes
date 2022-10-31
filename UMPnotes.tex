@@ -192,8 +192,8 @@ than just the group structure.
 
 
 Reasoning about representable functors requires every example of a representable functor to be explicitly
-instantiated as such by the user. The \verbatim{ring} tactic in Lean would be useless without
-also having a \verbatim{comm_semiring} typeclass where every example of a commutative semiring is
+instantiated as such by the user. The \lstinline{ring} tactic in Lean would be useless without
+also having a \lstinline{comm_semiring} typeclass where every example of a commutative semiring is
 given as an instance of this typeclass. To be able to use the nice properties of representable functors,
 it is necessary to encode exactly what properties we want to use and to provide a convenient interface for
 the user to be able to prove instances of this, and should preferably not require the use to have understand
@@ -315,5 +315,7 @@ categories.
 \section{The Isomorphism Problem - Transferring across Isomorphisms}
 
 There is a problem in formal proof about how to transfer proofs and structure across an isomorphism.
+
+Let's take one example of
 
 \end{document}
