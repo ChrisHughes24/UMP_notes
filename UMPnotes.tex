@@ -142,6 +142,63 @@
 
 \begin{document}
 
+\section{Introduction}
+
+When reasoning about formal mathematics it is very common to use the concept of a (co)representable functor. A (co)representable
+functor is a method of describing the set of morphisms into (out of) an object in a category, and how to compose these morphisms.
+Saying that an object is a (co)representation of a functor also uniquely specifies that object up to isomorphism and encodes
+some other useful information about the object. I will be more precise about this later.
+
+One example of a corepresentation of a functor is the polynomial ring $R[X]$ over a commutative ring $R$. This is a corepresentation
+of the functor $S \mapsto \text{Hom}(R, S) \times S$. This means that for any commutative ring $S$ there is an
+equivalence of sets $R[X] \cong \text{Hom}(R, S) \times S$. There is an evaluation map $eval$ taking a morphism $\text{Hom}(R, S)$ and
+an element of $S$ to return a morphism $\text{Hom}(R[X], S)$. This gives one direction of the isomorphism $R[X] \cong \text{Hom}(R, S) \times S$.
+The other direction of this isomorphism is given by sending $f \in \text{Hom}(R[X], S)$ to the pair
+$(f \circ C, f(X)$, where $C$ is the canonical map $R \to R[X]$. The fact that this is an isomorphism encodes the fact that
+$eval(f, s)(X) = s$ and $eval(f, s)(C(r)) = f(r)$. It also encodes the fact that any two morphisms
+$f, g \in \text{Hom}(R[X], S)$ are equal if $f(X) = g(X)$ and $f \circ C = g \circ C$. These functions and equalities
+give convenient ways of defining maps in and out of the polynomial ring and of proving they are equal. They also uniquely
+define the polynomial ring as an object in the category of commutative rings. These equalities are all "obvious" to most
+mathematicians, including mathematicians who know nothing about category theory, and most of the equalities that follow
+from the equalities above are of the kind that would not require
+a proof in a paper. They can be, however, difficult to prove in a proof assistant to somebody who does not know
+some techniques for proving equations like this in a proof assistant.
+
+In general saying an object is a (co)representation of a partiular functor gives a method of defing morphisms
+into or out of this object and of proving equalities of these morphisms. It also characterises the object within the
+category, giving some notion of what the object "is". (I don't really know what this means but it is probably important
+for a bunch of reasons).
+
+Knowing that an object in a category is a representation of a functor $F$ is not very useful unless we also know
+something about the functor $F$. For example, $F$ might be the product of functors, it might be a dependent
+product of functors, or it it could be a Hom-functor, or a composition of functors. We will define
+a syntax for writing down representable functors that covers most examples found in Lean.
+
+The notion of representable functor also has applications to the problem of transferring proofs across isomorphisms.
+As an example, if $M$ and $N$ are monoids, and $M^{\times}$ are the units of the monoid $M$, the two groups $M^{\times} \times N^{\times}$
+and $(M \times N)^{\times}$ are isomorphic. However in order to transfer properties about this it is important to know
+more about how this isomorphism behaves. Both of these groups have natural maps into the monoids $M$ and $N$.
+Often, when we want to prove a property of the group $M^{\times} \times N^{\times}$ also holds for the group
+$(M \times N)^{\times}$, this property may be not just a property of the group structure, but a property of the group structure
+and the maps into $M$ and $N$ say. The isomorphism $M^{\times} \times N^{\times} \cong (M \times N)^{\times}$ commutes with the maps
+into $M$ and $N$, so in fact it is stronger than an isomorphism of groups, it is an isomorphism of groups with maps into $M$ and $N$.
+This follows from the fact that these two groups are representations of the same functor. The group $M^{\times} \times N^{\times}$
+is a representation of the functor $G \mapsto \text{Hom}_{Mon}(G, M) \times \text{Hom}_{Mon}(G, N)$, i.e.
+$\text{Hom}_{Grp}(G, M^{\times} \times N^{\times}) \cong \text{Hom}_{Mon}(G, M) \times \text{Hom}_{Mon}(G, N)$.
+Substituting $G=M^{\times} \times N^{\times}$, and applying this isomorphism to the identity map of $M^{\times} \times N^{\times}$,
+gives the canonical maps $M^{\times} \times N^{\times} \to M$ and $M^{\times} \times N^{\times} \to N$. Therefore, by understanding
+representable functors, we have a better way of understanding how to transfer proofs across isomorphisms that preserve more structure
+than just the group structure.
+
+
+Reasoning about representable functors requires every example of a representable functor to be explicitly
+instantiated as such by the user. The \verbatim{ring} tactic in Lean would be useless without
+also having a \verbatim{comm_semiring} typeclass where every example of a commutative semiring is
+given as an instance of this typeclass. To be able to use the nice properties of representable functors,
+it is necessary to encode exactly what properties we want to use and to provide a convenient interface for
+the user to be able to prove instances of this, and should preferably not require the use to have understand
+much category theory in order to be able to use it.
+
 
 \section{Definition of Representable Functor}
 
@@ -256,5 +313,7 @@ categories.
 \section{Comparison with UMP of Inductive Types}
 
 \section{The Isomorphism Problem - Transferring across Isomorphisms}
+
+There is a problem in formal proof about how to transfer proofs and structure across an isomorphism.
 
 \end{document}
