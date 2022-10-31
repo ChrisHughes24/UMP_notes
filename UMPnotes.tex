@@ -273,7 +273,7 @@ This can be characterised by the following data about $F$
 There are many examples of representations or corepresentations of functors in mathematics.
 
 If $C$ is a category, and $X$ and $Y$ are objects of $C$, then the product, $X \times Y$ is a representation
-of the functor $Hom(-, X) \times Hom(-, Y)$, meaning for any object $Z$ of $C$, the set
+of the functor $\text{Hom}(-, X) \times \text{Hom}(-, Y)$, meaning for any object $Z$ of $C$, the set
 $\text{Hom}(Z, X \times Y)$ is isomorphic to the set $\text{Hom}(Z, X) \times \text{Hom}(Z, Y)$.
 
 In the category of sets, the set with one element, $1$, is the terminal object. This means it is a representation
@@ -314,8 +314,36 @@ categories.
 
 \section{The Isomorphism Problem - Transferring across Isomorphisms}
 
-There is a problem in formal proof about how to transfer proofs and structure across an isomorphism.
+There is a problem in formal proof about how to transfer proofs and structure across an isomorphism. Using
+a univalent type theory is supposed to assist with this sort of problems, but even in a univalent type theory this
+is a difficult problem. The aim of this section is to show why it is still a difficult problem and why having
+a robust interface for representable functors might make this problem easier.
 
-Let's take one example of
+Let's take one example of the idea of transfering proofs an structure across isomorphisms. Take a commutative
+ring $R$ with multiplicative submonoids $M$ and $N$. The localization of $R$ at $<$ can be thought of as freely
+adjoining inverses to every element of $M$. It is a corepresentation of the following functor
+$F : \text{CommRing} \to \text{Set}$, sending a ring $S$ to the set
+$\{ f \in \text{Hom}(R, S) \ : \ \forall m \in M, \exists s \in S, f(m)s = 1 \}$.
+Letting $S$ = $M^{-1}R$ we can see that there is a ring homomorphism $\iota_M : R \to M^{-1}R$.
+
+It is true that the commutative rings $(MN)^{-1}R$ and $(\iota_N M)^{-1}(N^{-1}R)$ are isomorphic,
+where $MN$ is the submomoid of $R$ given by $\{ mn \ : \ m \in M, n \in N \}$, and $\iota_N(M)$ is the
+image of $M$ under $\iota_N$.
+
+An example of the sort of proof that someone might want to transfer across this isomorphism is the
+following. The ring $(MN)^{-1}R$ has the following property $P$.
+
+\begin{equation}
+  P := \forall x \in (MN)^{-1}R, \exists r, m, n \in R, m \in N \wedge n \in N \wedge x\iota_{MN}(mn) = \iota_{MN}(r)
+\end{equation}
+
+We might want to prove automatically the following property of the ring $(\iota_N M)^{-1}(N^{-1}R)$, called $Q$.
+
+\begin{equation}
+  Q := \forall x \in (\iota_N M)^{-1}(N^{-1}R), \exists r, m, n \in R, m \in N \wedge n \in N \wedge x\iota_{\iota_N M}(\iota_N(mn)) =
+  \iota_{\iota_N M}(\iota_N((r))
+\end{equation}
+
+
 
 \end{document}
